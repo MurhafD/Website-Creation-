@@ -1,2 +1,4 @@
 node_modules/
 .claude/skills/ui-ux-pro-max/scripts/__pycache__/
+.next/
+next-env.d.ts
