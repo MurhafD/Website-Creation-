@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const links = [
   { label: "Products", href: "#products" },
   { label: "Technology", href: "#technology" },
+  { label: "Gallery", href: "#gallery" },
   { label: "Colours", href: "#colours" },
   { label: "Specs", href: "#specs" },
   { label: "About", href: "#about" },
@@ -32,22 +33,36 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <a href="#hero" className="flex items-center gap-3">
-          <img src="/logo.png" alt="PrimeAlux" className="h-10 w-auto" />
+          <img
+            src="/logo.png"
+            alt="PrimeAlux"
+            className="h-10 w-auto"
+            onError={(e) => {
+              const t = e.currentTarget;
+              t.style.display = "none";
+              const fallback = t.nextElementSibling as HTMLElement | null;
+              if (fallback) fallback.style.display = "flex";
+            }}
+          />
+          <div className="hidden items-center gap-2">
+            <div className="w-8 h-8 bg-[#4a5e1e] rounded flex items-center justify-center text-white font-bold text-sm">P</div>
+            <span className="font-bold text-[#f5f0e8] text-lg tracking-tight">PrimeAlux</span>
+          </div>
         </a>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-7">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="text-sm font-medium text-[#f5f0e8]/80 hover:text-[#f5f0e8] transition-colors hover:text-[#8fb832]"
+              className="text-sm font-medium text-[#f5f0e8]/70 hover:text-[#8fb832] transition-colors"
             >
               {l.label}
             </a>
           ))}
           <a
             href="#contact"
-            className="bg-[#4a5e1e] hover:bg-[#5d7626] text-white text-sm font-semibold px-5 py-2.5 rounded transition-colors"
+            className="bg-[#4a5e1e] hover:bg-[#5d7626] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
           >
             Get a Quote
           </a>
@@ -56,10 +71,11 @@ export default function Navbar() {
         <button
           className="md:hidden text-[#f5f0e8] p-2"
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
         >
-          <div className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-          <div className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${menuOpen ? "opacity-0" : ""}`} />
-          <div className={`w-6 h-0.5 bg-current transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+          <div className={`w-6 h-0.5 bg-current mb-1.5 transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+          <div className={`w-6 h-0.5 bg-current mb-1.5 transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+          <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
         </button>
       </div>
 
@@ -71,13 +87,13 @@ export default function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-[#1a1a1a] border-t border-white/10"
           >
-            <div className="px-6 py-4 flex flex-col gap-4">
+            <div className="px-6 py-5 flex flex-col gap-4">
               {links.map((l) => (
                 <a
                   key={l.href}
                   href={l.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-[#f5f0e8]/80 hover:text-[#8fb832] font-medium transition-colors"
+                  className="text-[#f5f0e8]/80 hover:text-[#8fb832] font-medium transition-colors py-1"
                 >
                   {l.label}
                 </a>
@@ -85,7 +101,7 @@ export default function Navbar() {
               <a
                 href="#contact"
                 onClick={() => setMenuOpen(false)}
-                className="bg-[#4a5e1e] text-white text-center font-semibold px-5 py-2.5 rounded"
+                className="bg-[#4a5e1e] text-white text-center font-semibold px-5 py-3 rounded-lg mt-2"
               >
                 Get a Quote
               </a>
