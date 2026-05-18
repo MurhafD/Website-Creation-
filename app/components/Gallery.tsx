@@ -3,129 +3,118 @@ import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { useInView } from "framer-motion";
 
+// Map your photos: place files in /public/images/ with these exact names
 const photos = [
   {
-    id: 1,
-    src: "/images/gate-1.jpg",
-    alt: "Backyard gate with dark walnut wood-grain slats and charcoal aluminum frame",
-    label: "Backyard Gate — Dark Walnut",
+    src: "/images/gate-backyard-walnut.jpg",
+    label: "Backyard Gate",
+    colour: "Dark Walnut",
     accent: "#3d1c0a",
+    span: "col-span-1 row-span-2", // tall
   },
   {
-    id: 2,
-    src: "/images/gate-2.jpg",
-    alt: "Privacy fence with driftwood grey slats and black frame on artificial turf",
-    label: "Privacy Gate — Driftwood Grey",
+    src: "/images/gate-fence-grey.jpg",
+    label: "Privacy Fence & Gate",
+    colour: "Driftwood Grey",
     accent: "#9b8e7e",
+    span: "col-span-1",
   },
   {
-    id: 3,
-    src: "/images/gate-3.jpg",
-    alt: "Double swing gate with warm brown wood-grain slats lit at night",
-    label: "Double Swing Gate — Teak",
-    accent: "#7a3b1e",
+    src: "/images/gate-double-night.jpg",
+    label: "Double Gate",
+    colour: "Teak — Night shot",
+    accent: "#5a3010",
+    span: "col-span-1",
   },
   {
-    id: 4,
-    src: "/images/gate-4.jpg",
-    alt: "Single backyard gate with espresso slats and charcoal frame",
-    label: "Backyard Gate — Espresso",
-    accent: "#2d1a0e",
+    src: "/images/gate-sliding-dark.jpg",
+    label: "Sliding Gate",
+    colour: "Dark Walnut",
+    accent: "#2d1408",
+    span: "col-span-1",
   },
   {
-    id: 5,
-    src: "/images/gate-5.jpg",
-    alt: "Wide sliding gate installation with dark brown wood-grain finish",
-    label: "Sliding Gate — Dark Walnut",
-    accent: "#3d1c0a",
+    src: "/images/gate-fence-driftwood.jpg",
+    label: "Backyard Fence & Gate",
+    colour: "Driftwood Grey",
+    accent: "#9b8e7e",
+    span: "col-span-1 row-span-2", // tall
   },
   {
-    id: 6,
-    src: "/images/gate-6.jpg",
-    alt: "Charcoal black commercial gate with glass panel inserts",
-    label: "Commercial Gate — Charcoal Black",
+    src: "/images/gate-sliding-charcoal.jpg",
+    label: "Sliding Gate — Automatic",
+    colour: "Charcoal Black",
     accent: "#2c2c2c",
+    span: "col-span-1",
   },
   {
-    id: 7,
-    src: "/images/gate-7.jpg",
-    alt: "Open-slat louvered gate with teak finish in urban setting",
-    label: "Open-Slat Gate — Teak",
-    accent: "#8b4513",
+    src: "/images/gate-vertical-oak.jpg",
+    label: "Backyard Fence & Gate",
+    colour: "Light Oak",
+    accent: "#c8955a",
+    span: "col-span-1",
   },
   {
-    id: 8,
-    src: "/images/gate-8.jpg",
-    alt: "Sloped driveway gate with teak wood-grain slats",
-    label: "Sloped Gate — Teak",
-    accent: "#8b4513",
+    src: "/images/gate-commercial.jpg",
+    label: "Commercial Gate",
+    colour: "Charcoal Black",
+    accent: "#2c2c2c",
+    span: "col-span-1",
   },
 ];
 
-function PhotoSlot({
-  photo,
-  index,
-}: {
-  photo: (typeof photos)[0];
-  index: number;
-}) {
+function Photo({ photo, index }: { photo: (typeof photos)[0]; index: number }) {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.97 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay: (index % 4) * 0.08 }}
-      className="group relative rounded-xl overflow-hidden aspect-[4/3] bg-[#2a2a2a]"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.55, delay: (index % 4) * 0.07 }}
+      className={`group relative rounded-2xl overflow-hidden bg-[#242424] ${photo.span} min-h-[220px]`}
     >
-      {/* Placeholder shown while image loads or if missing */}
-      {(!loaded || errored) && (
-        <div
-          className="absolute inset-0 flex flex-col items-center justify-center"
-          style={{ backgroundColor: photo.accent }}
-        >
-          <div
-            className="absolute inset-0 opacity-30"
-            style={{
-              backgroundImage: `repeating-linear-gradient(
-                180deg,
-                rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 34px,
-                rgba(0,0,0,0.25) 34px, rgba(0,0,0,0.25) 38px
-              )`,
-            }}
-          />
-          {/* Frame simulation */}
-          <div className="absolute top-0 left-0 right-0 h-5 bg-[#2a2a2a] opacity-70" />
-          <div className="absolute bottom-0 left-0 right-0 h-5 bg-[#2a2a2a] opacity-70" />
-          <div className="absolute top-0 bottom-0 left-0 w-5 bg-[#2a2a2a] opacity-70" />
-          <div className="absolute top-0 bottom-0 right-0 w-5 bg-[#2a2a2a] opacity-70" />
-          {errored && (
-            <div className="relative z-10 text-center px-4">
-              <div className="text-2xl mb-2 opacity-40">📷</div>
-              <div className="text-xs text-white/40 font-mono">
-                {photo.src.replace("/images/", "")}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
+      {/* CSS placeholder — looks like the actual product */}
+      <div
+        className={`absolute inset-0 transition-opacity duration-500 ${loaded && !errored ? "opacity-0" : "opacity-100"}`}
+        style={{ backgroundColor: photo.accent }}
+      >
+        <div className="absolute inset-0" style={{
+          backgroundImage: "repeating-linear-gradient(180deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 32px, rgba(0,0,0,0.22) 32px, rgba(0,0,0,0.22) 36px)",
+        }} />
+        <div className="absolute inset-0" style={{
+          backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(0,0,0,0.07) 6px, rgba(0,0,0,0.07) 7px)",
+        }} />
+        {/* Frame sim */}
+        <div className="absolute top-0 left-0 right-0 h-4 bg-[#222]" />
+        <div className="absolute bottom-0 left-0 right-0 h-4 bg-[#222]" />
+        <div className="absolute top-0 bottom-0 left-0 w-4 bg-[#222]" />
+        <div className="absolute top-0 bottom-0 right-0 w-4 bg-[#222]" />
+        {errored && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
+            <span className="text-white/20 text-3xl">🚧</span>
+            <span className="text-white/20 text-xs font-mono">Add photo →<br/>{photo.src}</span>
+          </div>
+        )}
+      </div>
 
+      {/* Real photo */}
       <img
         src={photo.src}
-        alt={photo.alt}
+        alt={`${photo.label} — ${photo.colour}`}
         onLoad={() => setLoaded(true)}
         onError={() => setErrored(true)}
-        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${
+        className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
           loaded && !errored ? "opacity-100" : "opacity-0"
         }`}
       />
 
-      {/* Overlay label */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-        <span className="text-sm font-semibold text-white">{photo.label}</span>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-3 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+        <div className="text-sm font-bold text-white">{photo.label}</div>
+        <div className="text-xs text-white/60 mt-0.5">{photo.colour}</div>
       </div>
     </motion.div>
   );
@@ -152,27 +141,28 @@ export default function Gallery() {
             See Them in the Real World
           </h2>
           <p className="text-[#f5f0e8]/60 max-w-xl mx-auto">
-            Every gate is custom-built and installed across Canada and the United States.
-            Here&apos;s what our customers are living with every day.
+            Installed across Canada and the United States. Every gate is custom-built to your opening,
+            colour, and configuration.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Masonry-style grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 grid-rows-auto gap-4 auto-rows-[220px]">
           {photos.map((p, i) => (
-            <PhotoSlot key={p.id} photo={p} index={i} />
+            <Photo key={i} photo={p} index={i} />
           ))}
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-center mt-10"
+          className="text-center mt-12"
         >
           <a
             href="#contact"
-            className="inline-block bg-[#4a5e1e] hover:bg-[#5d7626] text-white font-semibold px-8 py-4 rounded-lg transition-colors text-sm"
+            className="inline-block bg-[#4a5e1e] hover:bg-[#5d7626] text-white font-bold px-10 py-4 rounded-xl transition-colors text-sm shadow-lg shadow-[#4a5e1e]/20"
           >
             Get a Quote for Your Property →
           </a>
