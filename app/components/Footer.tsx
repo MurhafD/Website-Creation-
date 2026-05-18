@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-3 gap-10 mb-10">
           <div>
-            <img src="/logo.png" alt="PrimeAlux" className="h-10 w-auto mb-4" />
+            <img src="/HD.png" alt="PrimeAlux" className="h-10 w-auto mb-4" />
             <p className="text-sm text-[#f5f0e8]/40 leading-relaxed max-w-xs">
               Canadian manufacturer of premium aluminum gates, fences, pergolas, and outdoor structures.
               Nearly 50 years of aluminum expertise.
